@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Wizard extends Hero {
-    Wizard(int hp, Pair<Pair<Integer, Integer>, Character> position, ArrayList<IAbility> abilities) {
+    public Wizard(int hp, Pair<String, Pair<Integer, Integer>> position, ArrayList<IAbility> abilities) {
         this.hp = hp;
         exp = 0;
         lvl = 1;

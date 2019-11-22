@@ -12,7 +12,7 @@ public abstract class Hero {
     protected int lvl;
     protected int maxHP;
     protected ArrayList<IAbility> abilities;
-    Pair<Pair<Integer, Integer>, Character> position;
+    Pair<String, Pair<Integer, Integer>> position;
 
     void addAbility(IAbility ability) {
         abilities.add(ability);
@@ -28,11 +28,11 @@ public abstract class Hero {
         this.lvl = lvl;
     }
 
-    public Pair<Pair<Integer, Integer>, Character> getPosition() {
+    public Pair<String, Pair<Integer, Integer>> getPosition() {
         return position;
     }
 
-    public void setPosition(Pair<Pair<Integer, Integer>, Character> position) {
+    public void setPosition(Pair<String, Pair<Integer, Integer>> position) {
         this.position = position;
     }
 

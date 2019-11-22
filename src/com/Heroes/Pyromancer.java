@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Pyromancer extends Hero {
-    Pyromancer(int hp, Pair<Pair<Integer, Integer>, Character> position, ArrayList<IAbility> abilities) {
+    public Pyromancer(int hp, Pair<String, Pair<Integer, Integer>> position, ArrayList<IAbility> abilities) {
         this.hp = hp;
         exp = 0;
         lvl = 1;
