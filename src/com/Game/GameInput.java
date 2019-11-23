@@ -1,17 +1,15 @@
 package com.Game;
 
-import javafx.util.Pair;
-
 import java.util.ArrayList;
 import java.util.Hashtable;
 
 public class GameInput {
-    private final ArrayList<Pair<String, Pair<Integer, Integer>>> initialPosition;
-    private final Pair<Integer, Integer> mapSize;
-    Hashtable<Pair<Integer, Integer>, Character> lands;
-    private int noCharacters;
-    private int noRounds;
-    private ArrayList<String> rounds;
+    private final ArrayList<MyPair<Character, MyPair<Integer, Integer>>> initialPosition;
+    private final MyPair<Integer, Integer> mapSize;
+    private final Hashtable<MyPair<Integer, Integer>, Character> lands;
+    private final int noCharacters;
+    private final int noRounds;
+    private final ArrayList<String> rounds;
 
     public GameInput() {
         lands = null;
@@ -19,11 +17,12 @@ public class GameInput {
         noCharacters = -1;
         noRounds = -1;
         mapSize = null;
+        rounds = null;
     }
 
-    public GameInput(int noCharacters, int noRounds, Hashtable<Pair<Integer, Integer>, Character> lands,
-                     ArrayList<String> rounds, ArrayList<Pair<String,
-            Pair<Integer, Integer>>> initialPosition, Pair<Integer, Integer> mapSize) {
+    public GameInput(int noCharacters, int noRounds, Hashtable<MyPair<Integer, Integer>, Character> lands,
+                     ArrayList<String> rounds, ArrayList<MyPair<Character,
+            MyPair<Integer, Integer>>> initialPosition, MyPair<Integer, Integer> mapSize) {
         this.lands = lands;
         this.initialPosition = initialPosition;
         this.noCharacters = noCharacters;
@@ -36,38 +35,24 @@ public class GameInput {
         return noCharacters;
     }
 
-    public void setNoCharacters(int noCharacters) {
-        this.noCharacters = noCharacters;
-    }
-
     public int getNoRounds() {
         return noRounds;
     }
 
-    public void setNoRounds(int noRounds) {
-        this.noRounds = noRounds;
-    }
-
-    public Hashtable<Pair<Integer, Integer>, Character> getLands() {
+    public Hashtable<MyPair<Integer, Integer>, Character> getLands() {
         return lands;
     }
 
-
-
-    public ArrayList<Pair<String, Pair<Integer, Integer>>> getInitialPosition() {
+    public ArrayList<MyPair<Character, MyPair<Integer, Integer>>> getInitialPosition() {
         return initialPosition;
     }
 
-    public Pair<Integer, Integer> getMapSize() {
+    public MyPair<Integer, Integer> getMapSize() {
         return mapSize;
     }
 
     public ArrayList<String> getRounds() {
         return rounds;
-    }
-
-    public void setRounds(ArrayList<String> rounds) {
-        this.rounds = rounds;
     }
 
     public final boolean isValidInput() {

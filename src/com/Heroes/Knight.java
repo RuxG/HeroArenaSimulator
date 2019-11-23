@@ -1,19 +1,24 @@
 package com.Heroes;
 
 import com.Abilities.IAbility;
-import javafx.util.Pair;
+import com.Abilities.OvertimeEffect;
+import com.Game.MyPair;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class Knight extends Hero {
-    public Knight(int hp, Pair<String, Pair<Integer, Integer>> position, ArrayList<IAbility> abilities) {
-        this.hp = hp;
-        exp = 0;
-        lvl = 1;
-        maxHP = hp;
-        this.position = position;
-        Collections.addAll(abilities);
+    public Knight(int id, int hp, int upHP, MyPair<Character, MyPair<Integer, Integer>> position) {
+        super.setId(id);
+        super.setName("K");
+        super.setHp(hp);
+        super.setExp(0);
+        super.setLvl(0);
+        super.setMaxHP(hp);
+        super.setBaseHP(hp);
+        super.setUpHP(upHP);
+        super.setPosition(position);
+        super.setAbilities(new ArrayList<>());
+        super.setEffect(new OvertimeEffect(0, 0, false, this));
     }
     void acceptAttack(int lvl, IAbility ability) {
         ability.execute(lvl,this);

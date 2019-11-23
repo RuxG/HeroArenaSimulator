@@ -3,7 +3,6 @@ package com.Game;
 import com.Abilities.IAbility;
 import com.Constants;
 import com.Heroes.*;
-import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -18,40 +17,53 @@ public class HeroesFactory {
         return instance;
     }
 
-    ArrayList<Hero> getHeroes(ArrayList<Pair<String, Pair<Integer, Integer>>> initialPositions) {
+    ArrayList<Hero> getHeroes(ArrayList<MyPair<Character,
+            MyPair<Integer, Integer>>> initialPositions) {
+
         ArrayList<Hero> heroes = new ArrayList<>();
         Hashtable<String, IAbility> abilities = AbilitiesFactory.getInstance().getAbilities();
-        for(int i = 0; i < initialPositions.size(); i++) {
-            ArrayList<IAbility> ability = new ArrayList<>();
-           switch(initialPositions.get(i).getKey()) {
-               case "W":
-                   ability.add(abilities.get("Deflect"));
-                   ability.add(abilities.get("Drain"));
-                   heroes.add(new Wizard(Constants.WIZARD_BASE_HP,
-                           new Pair<String, Pair<Integer, Integer>>(initialPositions.get(i).getKey(),
-                           initialPositions.get(i).getValue()), ability));
-                   break;
-               case "P":
-                   ability.add(abilities.get("Fireblast"));
-                   ability.add(abilities.get("Ignite"));
-                   heroes.add(new Pyromancer(Constants.PYROMANCER_BASE_HP,
-                           new Pair<String, Pair<Integer, Integer>>(initialPositions.get(i).getKey(),
-                           initialPositions.get(i).getValue()), ability));
-                   break;
-               case "R":
-                   ability.add(abilities.get("Backstab"));
-                   ability.add(abilities.get("Paralysis"));
-                   heroes.add(new Rogue(Constants.ROGUE_BASE_HP,
-                           new Pair<String, Pair<Integer, Integer>>(initialPositions.get(i).getKey(),
-                           initialPositions.get(i).getValue()), ability));
-               case "K":
-                   ability.add(abilities.get("Execute"));
-                   ability.add(abilities.get("Slam"));
-                   heroes.add(new Knight(Constants.KNIGHT_BASE_HP,
-                           new Pair<String, Pair<Integer, Integer>>(initialPositions.get(i).getKey(),
-                           initialPositions.get(i).getValue()), ability));
-                   break;
-           }
+
+        for (int i = 0; i < initialPositions.size(); i++) {
+            BattlesStatistics.getInstance().getStatistics().put(i,
+                    new BattlesStatistics.HeroInfo());
+            Hashtable<MyPair<Integer, Integer>, Character> lands =
+                    Map.getInstance().getLands();
+
+            switch (initialPositions.get(i).getKey()) {
+                case 'W':
+                    heroes.add(new Wizard(i, Constants.WIZARD_BASE_HP, Constants.WIZARD_UP_HP,
+                            new MyPair<Character, MyPair<Integer, Integer>>
+                                    (lands.get(initialPositions.get(i).getValue())
+                                            , initialPositions.get(i).getValue())));
+                    heroes.get(i).addAbility(abilities.get("Deflect"));
+                    heroes.get(i).addAbility(abilities.get("Drain"));
+                    break;
+                case 'P':
+                    heroes.add(new Pyromancer(i, Constants.PYROMANCER_BASE_HP, Constants.PYRO_UP_HP,
+                            new MyPair<Character, MyPair<Integer, Integer>>
+                                    (lands.get(initialPositions.get(i).getValue())
+                                            , initialPositions.get(i).getValue())));
+                    heroes.get(i).addAbility(abilities.get("Fireblast"));
+                    heroes.get(i).addAbility(abilities.get("Ignite"));
+                    break;
+                case 'R':
+                    heroes.add(new Rogue(i, Constants.ROGUE_BASE_HP, Constants.ROGUE_UP_HP,
+                            new MyPair<Character, MyPair<Integer, Integer>>
+                                    (lands.get(initialPositions.get(i).getValue())
+                                            , initialPositions.get(i).getValue())));
+                    heroes.get(i).addAbility(abilities.get("Backstab"));
+                    heroes.get(i).addAbility(abilities.get("Paralysis"));
+                    break;
+                case 'K':
+                    Character c = Map.getInstance().getLands().get(initialPositions.get(i).getValue());
+                    heroes.add(new Knight(i, Constants.KNIGHT_BASE_HP, Constants.KNIGHT_UP_HP,
+                            new MyPair<Character, MyPair<Integer, Integer>>
+                                    (lands.get(initialPositions.get(i).getValue())
+                                            , initialPositions.get(i).getValue())));
+                    heroes.get(i).addAbility(abilities.get("Execute"));
+                    heroes.get(i).addAbility(abilities.get("Slam"));
+                    break;
+            }
         }
         return heroes;
     }

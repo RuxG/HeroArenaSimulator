@@ -1,7 +1,6 @@
 package com.Game;
 
 import fileio.FileSystem;
-import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -18,23 +17,24 @@ public final class GameInputLoader {
     public GameInput load() {
         int noCharacters = -1;
         int noRounds = -1;
-        Hashtable<Pair<Integer, Integer>, Character> lands = new Hashtable<>();
-        ArrayList<Pair<String, Pair<Integer, Integer>>> initialPosition = new ArrayList<>();
-        Pair<Integer, Integer> mapSize = null;
+        Hashtable<MyPair<Integer, Integer>, Character> lands = new Hashtable<>();
+        ArrayList<MyPair<Character, MyPair<Integer, Integer>>> initialPosition = new ArrayList<>();
+        MyPair<Integer, Integer> mapSize = null;
         ArrayList<String> rounds = new ArrayList<>();
         try {
             FileSystem fs = new FileSystem(mInputPath, mOutputPath);
-            mapSize = new Pair<>(fs.nextInt(), fs.nextInt());
+            mapSize = new MyPair<>(fs.nextInt(), fs.nextInt());
             for (int i = 0; i < mapSize.getKey(); i++) {
                 String line = fs.nextWord();
                 for (int j = 0; j < mapSize.getValue(); j++) {
-                    lands.put(new Pair<Integer, Integer>(i, j), line.charAt(j));
+                    lands.put(new MyPair<Integer, Integer>(i, j), line.charAt(j));
                 }
             }
             noCharacters = fs.nextInt();
             for (int i = 0; i < noCharacters; i++) {
-                initialPosition.add(new Pair<>(fs.nextWord(),
-                        new Pair<>(fs.nextInt(), fs.nextInt())));
+                String line = fs.nextWord();
+                initialPosition.add(new MyPair<Character, MyPair<Integer, Integer>>(line.charAt(0),
+                        new MyPair<Integer, Integer>(fs.nextInt(), fs.nextInt())));
             }
             noRounds = fs.nextInt();
             for (int i = 0; i < noRounds; i++) {
