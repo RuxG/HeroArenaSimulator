@@ -9,5 +9,6 @@ public class Main {
         GameInputLoader loader = new GameInputLoader(args[0], args[1]);
         GameInput input = loader.load();
         Game game = Game.getInstance(input);
+        game.executeRounds();
     }
 }

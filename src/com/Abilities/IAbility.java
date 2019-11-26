@@ -1,11 +1,17 @@
 package com.Abilities;
 
+import com.Game.BattlesStatistics;
 import com.Heroes.*;
 
 public interface IAbility {
-    public void applyDamage(int lvl, Hero victim);
-    public void execute(int lvl, Wizard victim);
-    public void execute(int lvl, Rogue victim);
-    public void execute(int lvl, Pyromancer victim);
-    public void execute(int lvl, Knight victim);
+    BattlesStatistics.AttackInfo computeDamage(Hero caster, Hero victim);
+
+    BattlesStatistics.AttackInfo execute(Hero caster, Wizard victim);
+
+    BattlesStatistics.AttackInfo execute(Hero caster, Rogue victim);
+
+    BattlesStatistics.AttackInfo execute(Hero caster, Pyromancer victim);
+
+    BattlesStatistics.AttackInfo execute(Hero caster, Knight victim);
 }
+

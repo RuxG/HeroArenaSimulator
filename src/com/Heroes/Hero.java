@@ -3,6 +3,7 @@ package com.Heroes;
 
 import com.Abilities.IAbility;
 import com.Abilities.OvertimeEffect;
+import com.Game.BattlesStatistics;
 import com.Game.MyPair;
 
 import java.util.ArrayList;
@@ -29,14 +30,13 @@ public abstract class Hero {
             setMaxHP(baseHP + upHP * lvl);
             setHp(maxHP);
         }
-
     }
 
     public void addAbility(IAbility ability) {
         abilities.add(ability);
     }
 
-    abstract void acceptAttack(int lvl, IAbility ability);
+    public abstract BattlesStatistics.AttackInfo acceptAttack(Hero caster, final ArrayList<IAbility> abilities);
 
     public int getLvl() {
         return lvl;

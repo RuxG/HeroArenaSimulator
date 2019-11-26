@@ -2,6 +2,7 @@ package com.Heroes;
 
 import com.Abilities.IAbility;
 import com.Abilities.OvertimeEffect;
+import com.Game.BattlesStatistics;
 import com.Game.MyPair;
 
 import java.util.ArrayList;
@@ -21,7 +22,13 @@ public class Wizard extends Hero {
         super.setEffect(new OvertimeEffect(0, 0, false, this));
     }
 
-    void acceptAttack(int lvl, IAbility ability) {
-        ability.execute(lvl,this);
+    public BattlesStatistics.AttackInfo acceptAttack(Hero caster, final ArrayList<IAbility> abilities) {
+        BattlesStatistics.AttackInfo info = new BattlesStatistics.AttackInfo();
+        for (IAbility ability : abilities) {
+            BattlesStatistics.AttackInfo aux = ability.execute(caster, this);
+            info.setBruteDmg(info.getBruteDmg() + aux.getBruteDmg());
+            info.setTotalDmg(info.getTotalDmg() + aux.getTotalDmg());
+        }
+        return info;
     }
 }
