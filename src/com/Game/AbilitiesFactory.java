@@ -12,44 +12,53 @@ import com.Abilities.Wizard.Drain;
 
 import java.util.Hashtable;
 
+
+/**
+ * This class is a factory for the heroes's abilities.
+ */
 public class AbilitiesFactory {
     private static AbilitiesFactory instance = null;
+    private static Hashtable<String, IAbility> abilities;
+
     private AbilitiesFactory() {
     }
+
     public static AbilitiesFactory getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new AbilitiesFactory();
         }
         return instance;
     }
-    public IAbility getAbility(String ability) {
-        if(ability.compareTo("Backstab") == 0) {
-            return new Backstab();
+
+    /**
+     * @param ability names the ability to be returned
+     */
+    public IAbility getAbility(final String ability) {
+        if (ability.compareTo("Backstab") == 0) {
+            return abilities.get("Backstab");
         } else if (ability.compareTo("Paralysis") == 0) {
-            return new Paralysis();
-        }
-        else if (ability.compareTo("Drain") == 0) {
-            return new Drain();
-        }
-        else if (ability.compareTo("Deflect") == 0) {
-            return new Deflect();
-        }
-        else if (ability.compareTo("Execute") == 0) {
-            return new Execute();
-        }
-        else if (ability.compareTo("Slam") == 0) {
-            return new Slam();
-        }
-        else if (ability.compareTo("Fireblast") == 0) {
-            return new Fireblast();
-        }
-        else if (ability.compareTo("Ignite") == 0) {
-            return new Ignite();
+            return abilities.get("Paralysis");
+        } else if (ability.compareTo("Drain") == 0) {
+            return abilities.get("Drain");
+        } else if (ability.compareTo("Deflect") == 0) {
+            return abilities.get("Deflect");
+        } else if (ability.compareTo("Execute") == 0) {
+            return abilities.get("Execute");
+        } else if (ability.compareTo("Slam") == 0) {
+            return abilities.get("Slam");
+        } else if (ability.compareTo("Fireblast") == 0) {
+            return abilities.get("Fireblast");
+        } else if (ability.compareTo("Ignite") == 0) {
+            return abilities.get("Ignite");
         }
         return null;
     }
+
+    /**
+     * This method instantiates the abilities of the game and stores them in 'abilities' field
+     */
     public Hashtable<String, IAbility> getAbilities() {
-        Hashtable<String, IAbility> abilities = new Hashtable<>();
+        abilities = new Hashtable<>();
         abilities.put("Deflect", new Deflect());
         abilities.put("Drain", new Drain());
         abilities.put("Slam", new Slam());

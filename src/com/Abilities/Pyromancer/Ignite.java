@@ -4,14 +4,21 @@ import com.Abilities.IAbility;
 import com.Abilities.OvertimeEffect;
 import com.Constants;
 import com.Game.BattlesStatistics;
-import com.Heroes.*;
+import com.Heroes.Hero;
+import com.Heroes.Knight;
+import com.Heroes.Pyromancer;
+import com.Heroes.Rogue;
+import com.Heroes.Wizard;
 
 public class Ignite implements IAbility {
 
     private float raceA = 1f;
     private float landA = 1f;
 
-    public BattlesStatistics.AttackInfo computeDamage(Hero caster, Hero victim) {
+    /**
+     * @see IAbility#computeDamage(Hero, Hero)
+     */
+    public BattlesStatistics.AttackInfo computeDamage(final Hero caster, final Hero victim) {
         float dmg = 0f;
         landA = 1f;
         OvertimeEffect effect;
@@ -31,31 +38,44 @@ public class Ignite implements IAbility {
         dmg = Math.round(dmg);
         info.setTotalDmg(dmg);
 
-        effect = new OvertimeEffect(effectRounds, Math.round((Constants.IGNITE_EFFECT_BASE_DMG + caster.getLvl() *
-                Constants.IGNITE_EFFECT_UP_DMG) * raceA * landA), false, victim);
+        effect = new OvertimeEffect(effectRounds,
+                Math.round((Constants.IGNITE_EFFECT_BASE_DMG + caster.getLvl()
+                        * Constants.IGNITE_EFFECT_UP_DMG) * raceA * landA), false, victim);
         victim.setEffect(effect);
 
         return info;
     }
 
-    public BattlesStatistics.AttackInfo execute(Hero caster, Wizard victim) {
+    /**
+     * @see IAbility#computeDamage(Hero, Hero)
+     */
+    public BattlesStatistics.AttackInfo execute(final Hero caster, final Wizard victim) {
 
         raceA = Constants.IGNITE_WIZARD_A;
         return computeDamage(caster, victim);
     }
 
-    public BattlesStatistics.AttackInfo execute(Hero caster, Rogue victim) {
+    /**
+     * @see IAbility#computeDamage(Hero, Hero)
+     */
+    public BattlesStatistics.AttackInfo execute(final Hero caster, final Rogue victim) {
 
         raceA = Constants.IGNITE_ROGUE_A;
         return computeDamage(caster, victim);
     }
 
-    public BattlesStatistics.AttackInfo execute(Hero caster, Pyromancer victim) {
+    /**
+     * @see IAbility#computeDamage(Hero, Hero)
+     */
+    public BattlesStatistics.AttackInfo execute(final Hero caster, final Pyromancer victim) {
         raceA = Constants.IGNITE_PYROMANCER_A;
         return computeDamage(caster, victim);
     }
 
-    public BattlesStatistics.AttackInfo execute(Hero caster, Knight victim) {
+    /**
+     * @see IAbility#computeDamage(Hero, Hero)
+     */
+    public BattlesStatistics.AttackInfo execute(final Hero caster, final Knight victim) {
         raceA = Constants.IGNITE_KNIGHT_A;
         return computeDamage(caster, victim);
     }

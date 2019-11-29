@@ -3,7 +3,11 @@ package com.Abilities.Wizard;
 import com.Abilities.IAbility;
 import com.Constants;
 import com.Game.BattlesStatistics;
-import com.Heroes.*;
+import com.Heroes.Hero;
+import com.Heroes.Knight;
+import com.Heroes.Pyromancer;
+import com.Heroes.Rogue;
+import com.Heroes.Wizard;
 
 import static java.lang.Float.min;
 
@@ -11,7 +15,10 @@ public class Drain implements IAbility {
     private float landA = 1f;
     private float raceA = 1f;
 
-    public BattlesStatistics.AttackInfo computeDamage(Hero caster, Hero victim) {
+    /**
+     * @see IAbility#computeDamage(Hero, Hero)
+     */
+    public BattlesStatistics.AttackInfo computeDamage(final Hero caster, final Hero victim) {
         float proc = 0f;
         float dmg = 0f;
         float hp = 0f;
@@ -37,22 +44,34 @@ public class Drain implements IAbility {
         return info;
     }
 
-    public BattlesStatistics.AttackInfo execute(Hero caster, Wizard victim) {
+    /**
+     * @see IAbility#computeDamage(Hero, Hero)
+     */
+    public BattlesStatistics.AttackInfo execute(final Hero caster, final Wizard victim) {
         raceA = Constants.DRAIN_WIZARD_A;
         return computeDamage(caster, victim);
     }
 
-    public BattlesStatistics.AttackInfo execute(Hero caster, Rogue victim) {
+    /**
+     * @see IAbility#computeDamage(Hero, Hero)
+     */
+    public BattlesStatistics.AttackInfo execute(final Hero caster, final Rogue victim) {
         raceA = Constants.DRAIN_ROGUE_A;
         return computeDamage(caster, victim);
     }
 
-    public BattlesStatistics.AttackInfo execute(Hero caster, Pyromancer victim) {
+    /**
+     * @see IAbility#computeDamage(Hero, Hero)
+     */
+    public BattlesStatistics.AttackInfo execute(final Hero caster, final Pyromancer victim) {
         raceA = Constants.DRAIN_PYROMANCER_A;
         return computeDamage(caster, victim);
     }
 
-    public BattlesStatistics.AttackInfo execute(Hero caster, Knight victim) {
+    /**
+     * @see IAbility#computeDamage(Hero, Hero)
+     */
+    public BattlesStatistics.AttackInfo execute(final Hero caster, final Knight victim) {
         raceA = Constants.DRAIN_KNIGHT_A;
         return computeDamage(caster, victim);
     }

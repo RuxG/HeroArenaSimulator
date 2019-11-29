@@ -1,5 +1,6 @@
 package com.Game;
 
+import com.Constants;
 import com.Heroes.Hero;
 import com.Heroes.Wizard;
 
@@ -7,14 +8,14 @@ import java.util.ArrayList;
 
 import static java.lang.Math.max;
 
-public class Game {
+public final class Game {
     private static Game instance = null;
-    GameInput input;
-    Map map;
-    ArrayList<Hero> heroes;
+    private GameInput input;
+    private Map map;
+    private ArrayList<Hero> heroes;
     private ArrayList<String> rounds;
 
-    private Game(GameInput input) {
+    private Game(final GameInput input) {
         this.input = input;
         map = Map.getInstance(input.getMapSize().getKey(), input.getMapSize().getValue(),
                 input.getLands());
@@ -22,13 +23,19 @@ public class Game {
         heroes = HeroesFactory.getInstance().getHeroes(input.getInitialPosition());
     }
 
-    public static Game getInstance(GameInput input) {
+    public static Game getInstance(final GameInput input) {
         if (instance == null) {
             instance = new Game(input);
         }
         return instance;
     }
 
+    /*
+        This function executes the moves of the heroes on the map.
+        Firstly, a line describing a round is read.
+        Secondly, the overtime effects are applied on each hero.
+        Thirdly, the heroes are moved to the required location.
+    */
     public void move() {
         StringBuilder line = new StringBuilder(rounds.get(0));
         rounds.remove(0);
@@ -36,7 +43,7 @@ public class Game {
             hero.getEffect().execute();
             Character c = line.charAt(0);
             line.delete(0, 1);
-            if (hero.getEffect().isImobility() || hero.getHp() <= 0) {
+            if (hero.getEffect().isImmobility() || hero.getHp() <= 0) {
                 continue;
             }
             MyPair<Integer, Integer> pos;
@@ -70,17 +77,25 @@ public class Game {
                     break;
                 case '_':
                     break;
+                default:
+                    break;
             }
 
         }
     }
 
+    /*
+       This method sequentially executes the rounds's operations, by
+       firstly moving the heroes on the map and then invoking the
+       fight method each time two heroes should battle.
+   */
     public void executeRounds() {
         for (int i = 0; i < input.getNoRounds(); i++) {
             move();
             for (int j = 0; j < heroes.size(); j++) {
                 for (int k = j + 1; k < heroes.size(); k++) {
-                    if (heroes.get(j).getPosition().getValue().equals(heroes.get(k).getPosition().getValue())) {
+                    if (heroes.get(j).getPosition().getValue().equals(
+                            heroes.get(k).getPosition().getValue())) {
                         if (heroes.get(j) instanceof Wizard) {
                             fight(heroes.get(k), heroes.get(j));
                         } else {
@@ -93,49 +108,68 @@ public class Game {
                 hero.checkLvlUp();
             }
         }
-        for (Hero hero : heroes) {
-            System.out.print(hero.getName() + " ");
-            if (hero.getHp() <= 0) System.out.print("dead");
-            else System.out.print(hero.getLvl() + " " + (int) hero.getExp() + " " + (int) hero.getHp() +
-                    " " + hero.getPosition().getValue().getKey() + " " +
-                    hero.getPosition().getValue().getValue());
-            System.out.println();
-        }
-        System.out.println();
     }
 
-    private void fight(Hero hero, Hero hero1) {
-        if (hero.getHp() <= 0 || hero1.getHp() <= 0) {
+    /*
+        This method conducts a fight between two heroes.
+        Each hero casts his abilities towards the other. The attacks's
+        outcome (damage with and without modifiers) are computed, and
+        applied on each combatant.
+        Then, the statistics of the battle are updated.
+     */
+    private void fight(final Hero combatant1, final Hero combatant2) {
+        if (combatant1.getHp() <= 0 || combatant2.getHp() <= 0) {
             return;
         }
-        BattlesStatistics.AttackInfo info = hero1.acceptAttack(hero, hero.getAbilities());
-        BattlesStatistics.AttackInfo info2 = hero.acceptAttack(hero1, hero1.getAbilities());
+        BattlesStatistics.AttackInfo info = combatant2.acceptAttack(combatant1);
+        BattlesStatistics.AttackInfo info2 = combatant1.acceptAttack(combatant2);
 
-        BattlesStatistics.getInstance().getStatistics().get(hero.getId()).addBattles();
-        BattlesStatistics.getInstance().getStatistics().get(hero1.getId()).addBattles();
+        BattlesStatistics.getInstance().getStatistics().get(combatant1.getId()).addBattles();
+        BattlesStatistics.getInstance().getStatistics().get(combatant2.getId()).addBattles();
 
         float dmg = info.getTotalDmg();
         float dmg2 = info2.getTotalDmg();
 
-        hero.setHp(hero.getHp() - dmg2);
-        hero1.setHp(hero1.getHp() - dmg);
+        combatant1.setHp(combatant1.getHp() - dmg2);
+        combatant2.setHp(combatant2.getHp() - dmg);
 
-        if (hero.getHp() <= 0) {
-            battleResult(hero, hero1);
+        if (combatant1.getHp() <= 0) {
+            battleOutcome(combatant1, combatant2);
         }
-        if (hero1.getHp() <= 0) {
-            battleResult(hero1, hero);
+        if (combatant2.getHp() <= 0) {
+            battleOutcome(combatant2, combatant1);
         }
     }
 
-    public void battleResult(Hero h1, Hero h2) {
+    /*
+        This method updates the statistics of the battle and
+        computes the winner's experience.
+     */
+    public void battleOutcome(final Hero h1, final Hero h2) {
         BattlesStatistics.getInstance().setStatus(h1.getId(), false);
         if (h2.getHp() > 0) {
-            int xp = max(0, 200 - (h2.getLvl() - h1.getLvl()) * 40);
+            int xp = max(0, Constants.EXP - (h2.getLvl() - h1.getLvl())
+                    * Constants.EXP_SCALE);
             h2.setExp(h2.getExp() + xp);
         }
         BattlesStatistics.getInstance().addBattle(h2.getId(), true);
         BattlesStatistics.getInstance().addBattle(h1.getId(), false);
+    }
+
+    // This method prints the game's result
+    public void results() {
+        for (Hero hero : heroes) {
+            System.out.print(hero.getName() + " ");
+            if (hero.getHp() <= 0) {
+                System.out.print("dead");
+            } else {
+                System.out.print(hero.getLvl() + " " + (int) hero.getExp() + " "
+                        + (int) hero.getHp() + " " + hero.getPosition().getValue().getKey()
+                        + " " + hero.getPosition().getValue().getValue());
+            }
+            System.out.println();
+        }
+        System.out.println();
     }
 
     public Map getMap() {

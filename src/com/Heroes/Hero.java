@@ -3,11 +3,15 @@ package com.Heroes;
 
 import com.Abilities.IAbility;
 import com.Abilities.OvertimeEffect;
+import com.Constants;
 import com.Game.BattlesStatistics;
 import com.Game.MyPair;
 
 import java.util.ArrayList;
 
+/**
+ * This class represents the abstract form of a hero, with it's specific characteristics.
+ */
 public abstract class Hero {
     private int id;
     private String name;
@@ -21,113 +25,130 @@ public abstract class Hero {
     private OvertimeEffect effect;
     private MyPair<Character, MyPair<Integer, Integer>> position;
 
-    public void checkLvlUp() {
-        int expLvlUp = 250 + lvl * 50;
+    Hero(final int id, final String name, final int hp, final int upHP,
+         final MyPair<Character, MyPair<Integer, Integer>> position) {
+        setId(id);
+        setName(name);
+        setHp(hp);
+        setExp(0);
+        setLvl(0);
+        setMaxHP(hp);
+        setBaseHP(hp);
+        setUpHP(upHP);
+        setPosition(position);
+        setAbilities(new ArrayList<>());
+        setEffect(new OvertimeEffect(0, 0, false, this));
+    }
+
+    public final void checkLvlUp() {
+        int expLvlUp = Constants.LVL_UP_EXP + lvl * Constants.LVL_STEP;
         float aux = exp;
         while (aux >= expLvlUp) {
-            aux -= 50;
+            aux -= Constants.LVL_STEP;
             lvl++;
             setMaxHP(baseHP + upHP * lvl);
             setHp(maxHP);
         }
     }
 
-    public void addAbility(IAbility ability) {
+    public final void addAbility(final IAbility ability) {
         abilities.add(ability);
     }
 
-    public abstract BattlesStatistics.AttackInfo acceptAttack(Hero caster, final ArrayList<IAbility> abilities);
+    /**
+     * This method sequentially applies the caster's abilities on the current Hero instantiation
+     * and retains the damage given in the attack.
+     *
+     * @param caster is the hero initiating the attack
+     * @return information about the battle outcome
+     */
+    public abstract BattlesStatistics.AttackInfo acceptAttack(Hero caster);
 
-    public int getLvl() {
+    public final int getLvl() {
         return lvl;
     }
 
-    public void setLvl(int lvl) {
+    public final void setLvl(final int lvl) {
         this.lvl = lvl;
     }
 
-    public int getId() {
+    public final int getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public final void setId(final int id) {
         this.id = id;
     }
 
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public final void setName(final String name) {
         this.name = name;
     }
 
-    public float getExp() {
+    public final float getExp() {
         return exp;
     }
 
-    public void setExp(float exp) {
+    public final void setExp(final float exp) {
         this.exp = exp;
     }
 
-    public int getBaseHP() {
+    public final int getBaseHP() {
         return baseHP;
     }
 
-    public void setBaseHP(int baseHP) {
+    public final void setBaseHP(final int baseHP) {
         this.baseHP = baseHP;
     }
 
-    public int getUpHP() {
+    public final int getUpHP() {
         return upHP;
     }
 
-    public void setUpHP(int upHP) {
+    public final void setUpHP(final int upHP) {
         this.upHP = upHP;
     }
 
-    public ArrayList<IAbility> getAbilities() {
+    public final ArrayList<IAbility> getAbilities() {
         return abilities;
     }
 
-    public void setAbilities(ArrayList<IAbility> abilities) {
+    public final void setAbilities(final ArrayList<IAbility> abilities) {
         this.abilities = abilities;
     }
 
-    public OvertimeEffect getEffect() {
+    public final OvertimeEffect getEffect() {
         return effect;
     }
 
-    public void setEffect(OvertimeEffect effect) {
+    public final void setEffect(final OvertimeEffect effect) {
         this.effect = effect;
     }
 
-    public MyPair<Character, MyPair<Integer, Integer>> getPosition() {
+    public final MyPair<Character, MyPair<Integer, Integer>> getPosition() {
         return position;
     }
 
-    public void setPosition(MyPair<Character, MyPair<Integer, Integer>> position) {
+    public final void setPosition(final MyPair<Character, MyPair<Integer, Integer>> position) {
         this.position = position;
     }
 
-    public float getHp() {
+    public final float getHp() {
         return hp;
     }
 
-    public void setHp(float hp) {
+    public final void setHp(final float hp) {
         this.hp = hp;
     }
 
-    public int getMaxHP() {
+    public final int getMaxHP() {
         return maxHP;
     }
 
-    public void setMaxHP(int maxHP) {
+    public final void setMaxHP(final int maxHP) {
         this.maxHP = maxHP;
     }
-
-
-
 }
-
-

@@ -3,13 +3,20 @@ package com.Abilities.Knight;
 import com.Abilities.IAbility;
 import com.Constants;
 import com.Game.BattlesStatistics;
-import com.Heroes.*;
+import com.Heroes.Hero;
+import com.Heroes.Knight;
+import com.Heroes.Pyromancer;
+import com.Heroes.Rogue;
+import com.Heroes.Wizard;
 
 public class Execute implements IAbility {
     private float landA = 1f;
     private float raceA = 1f;
 
-    public BattlesStatistics.AttackInfo computeDamage(Hero caster, Hero victim) {
+    /**
+     * @see IAbility#computeDamage(Hero, Hero)
+     */
+    public BattlesStatistics.AttackInfo computeDamage(final Hero caster, final Hero victim) {
         float dmg = 0f;
         float hpLimit = 0f;
         landA = 1f;
@@ -17,8 +24,8 @@ public class Execute implements IAbility {
 
         hpLimit = Constants.EXECUTE_HP_LIMIT + Constants.EXECUTE_HP_UP_LIMIT * caster.getLvl();
 
-        if (hpLimit > 0.4f) {
-            hpLimit = 0.4f;
+        if (hpLimit > Constants.EXECUTE_LIMIT) {
+            hpLimit = Constants.EXECUTE_LIMIT;
         }
         float hpProc = victim.getHp() / victim.getMaxHP();
         if (hpProc < hpLimit) {
@@ -42,25 +49,35 @@ public class Execute implements IAbility {
         return info;
     }
 
-    public BattlesStatistics.AttackInfo execute(Hero caster, Wizard victim) {
+    /**
+     * @see IAbility#computeDamage(Hero, Hero)
+     */
+    public BattlesStatistics.AttackInfo execute(final Hero caster, final Wizard victim) {
         raceA = Constants.EXECUTE_WIZARD_A;
         return computeDamage(caster, victim);
     }
 
-    public BattlesStatistics.AttackInfo execute(Hero caster, Rogue victim) {
+    /**
+     * @see IAbility#computeDamage(Hero, Hero)
+     */
+    public BattlesStatistics.AttackInfo execute(final Hero caster, final Rogue victim) {
         raceA = Constants.EXECUTE_ROGUE_A;
         return computeDamage(caster, victim);
     }
 
-    public BattlesStatistics.AttackInfo execute(Hero caster, Pyromancer victim) {
+    /**
+     * @see IAbility#computeDamage(Hero, Hero)
+     */
+    public BattlesStatistics.AttackInfo execute(final Hero caster, final Pyromancer victim) {
         raceA = Constants.EXECUTE_PYROMANCER_A;
         return computeDamage(caster, victim);
     }
 
-    public BattlesStatistics.AttackInfo execute(Hero caster, Knight victim) {
+    /**
+     * @see IAbility#computeDamage(Hero, Hero)
+     */
+    public BattlesStatistics.AttackInfo execute(final Hero caster, final Knight victim) {
         raceA = Constants.EXECUTE_KNIGHT_A;
         return computeDamage(caster, victim);
     }
-
-
 }

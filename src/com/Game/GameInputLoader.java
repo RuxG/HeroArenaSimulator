@@ -5,6 +5,9 @@ import fileio.FileSystem;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
+/**
+ * This class processes the input.
+ */
 public final class GameInputLoader {
     private final String mInputPath;
     private final String mOutputPath;

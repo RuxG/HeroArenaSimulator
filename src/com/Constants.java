@@ -1,6 +1,12 @@
 package com;
 
 public class Constants {
+    public static final int EXP = 200;
+    public static final int EXP_SCALE = 40;
+
+    public static final int LVL_UP_EXP = 250;
+    public static final int LVL_STEP = 50;
+
     public static final int PYROMANCER_BASE_HP = 500;
     public static final int KNIGHT_BASE_HP = 900;
     public static final int ROGUE_BASE_HP = 600;
@@ -24,6 +30,7 @@ public class Constants {
     public static final int EXECUTE_UP_DMG = 30;
     public static final float EXECUTE_HP_LIMIT = 0.2f;
     public static final float EXECUTE_HP_UP_LIMIT = 0.01f;
+    public static final float EXECUTE_LIMIT = 0.04f;
 
     public static final int SLAM_BASE_DMG = 100;
     public static final int SLAM_UP_DMG = 40;
@@ -94,5 +101,4 @@ public class Constants {
     public static final float PARALYSIS_KNIGHT_A = 0.80f;
     public static final float PARALYSIS_PYROMANCER_A = 1.20f;
     public static final float PARALYSIS_WIZARD_A = 1.25f;
-
 }

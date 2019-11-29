@@ -4,14 +4,21 @@ import com.Abilities.IAbility;
 import com.Abilities.OvertimeEffect;
 import com.Constants;
 import com.Game.BattlesStatistics;
-import com.Heroes.*;
+import com.Heroes.Hero;
+import com.Heroes.Knight;
+import com.Heroes.Pyromancer;
+import com.Heroes.Rogue;
+import com.Heroes.Wizard;
 
 
 public class Paralysis implements IAbility {
     private float raceA = 1f;
     private float landA = 1f;
 
-    public BattlesStatistics.AttackInfo computeDamage(Hero caster, Hero victim) {
+    /**
+     * @see IAbility#computeDamage(Hero, Hero)
+     */
+    public BattlesStatistics.AttackInfo computeDamage(final Hero caster, final Hero victim) {
         float dmg = 0f;
         landA = 1f;
         OvertimeEffect effect;
@@ -23,8 +30,9 @@ public class Paralysis implements IAbility {
             effectRounds *= Constants.PARALYSIS_EFFECT_ROUND_AMPLIFIER;
             landA = Constants.ROGUE_LAND_BONUS;
         }
-        effect = new OvertimeEffect(effectRounds, Math.round((Constants.PARALYSIS_BASE_DMG + caster.getLvl() *
-                Constants.PARALYSIS_UP_DMG) * landA * raceA), true, victim);
+        effect = new OvertimeEffect(effectRounds,
+                Math.round((Constants.PARALYSIS_BASE_DMG + caster.getLvl()
+                        * Constants.PARALYSIS_UP_DMG) * landA * raceA), true, victim);
         dmg = (Constants.PARALYSIS_BASE_DMG + caster.getLvl() * Constants.PARALYSIS_UP_DMG);
 
         dmg *= landA;
@@ -38,22 +46,34 @@ public class Paralysis implements IAbility {
         return info;
     }
 
-    public BattlesStatistics.AttackInfo execute(Hero caster, Wizard victim) {
+    /**
+     * @see IAbility#computeDamage(Hero, Hero)
+     */
+    public BattlesStatistics.AttackInfo execute(final Hero caster, final Wizard victim) {
         raceA = Constants.PARALYSIS_WIZARD_A;
         return computeDamage(caster, victim);
     }
 
-    public BattlesStatistics.AttackInfo execute(Hero caster, Rogue victim) {
+    /**
+     * @see IAbility#computeDamage(Hero, Hero)
+     */
+    public BattlesStatistics.AttackInfo execute(final Hero caster, final Rogue victim) {
         raceA = Constants.PARALYSIS_ROGUE_A;
         return computeDamage(caster, victim);
     }
 
-    public BattlesStatistics.AttackInfo execute(Hero caster, Pyromancer victim) {
+    /**
+     * @see IAbility#computeDamage(Hero, Hero)
+     */
+    public BattlesStatistics.AttackInfo execute(final Hero caster, final Pyromancer victim) {
         raceA = Constants.PARALYSIS_PYROMANCER_A;
         return computeDamage(caster, victim);
     }
 
-    public BattlesStatistics.AttackInfo execute(Hero caster, Knight victim) {
+    /**
+     * @see IAbility#computeDamage(Hero, Hero)
+     */
+    public BattlesStatistics.AttackInfo execute(final Hero caster, final Knight victim) {
         raceA = Constants.PARALYSIS_KNIGHT_A;
         return computeDamage(caster, victim);
     }
