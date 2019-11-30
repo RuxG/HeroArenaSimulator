@@ -1,7 +1,7 @@
 package com.Abilities;
 
 import com.Game.BattlesStatistics;
-import com.Heroes.Hero;
+import com.Heroes.AHero;
 import com.Heroes.Knight;
 import com.Heroes.Pyromancer;
 import com.Heroes.Rogue;
@@ -22,14 +22,14 @@ public interface IAbility {
      * @param victim should be the hero targeted by the attack
      * @return information about battle outcome
      */
-    BattlesStatistics.AttackInfo computeDamage(Hero caster, Hero victim);
+    BattlesStatistics.AttackInfo computeDamage(AHero caster, AHero victim);
 
-    BattlesStatistics.AttackInfo execute(Hero caster, Wizard victim);
+    BattlesStatistics.AttackInfo execute(AHero caster, Wizard victim);
 
-    BattlesStatistics.AttackInfo execute(Hero caster, Rogue victim);
+    BattlesStatistics.AttackInfo execute(AHero caster, Rogue victim);
 
-    BattlesStatistics.AttackInfo execute(Hero caster, Pyromancer victim);
+    BattlesStatistics.AttackInfo execute(AHero caster, Pyromancer victim);
 
-    BattlesStatistics.AttackInfo execute(Hero caster, Knight victim);
+    BattlesStatistics.AttackInfo execute(AHero caster, Knight victim);
 }
 

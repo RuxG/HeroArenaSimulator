@@ -1,6 +1,6 @@
 package com.Abilities;
 
-import com.Heroes.Hero;
+import com.Heroes.AHero;
 
 /**
  * This class represents an overtime effect:
@@ -10,13 +10,13 @@ import com.Heroes.Hero;
  * - activates for a *number of rounds*
  */
 public class OvertimeEffect {
-    private Hero victim;
+    private AHero victim;
     private int noRounds;
     private float dmg;
     private boolean immobility;
 
     public OvertimeEffect(final int noRounds, final float dmg, final boolean imobility,
-                          final Hero victim) {
+                          final AHero victim) {
         this.noRounds = noRounds;
         this.dmg = dmg;
         this.immobility = imobility;

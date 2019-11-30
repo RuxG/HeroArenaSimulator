@@ -1,7 +1,7 @@
 package com.Game;
 
 import com.Constants;
-import com.Heroes.Hero;
+import com.Heroes.AHero;
 import com.Heroes.Wizard;
 
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ public final class Game {
     private static Game instance = null;
     private GameInput input;
     private Map map;
-    private ArrayList<Hero> heroes;
+    private ArrayList<AHero> heroes;
     private ArrayList<String> rounds;
 
     private Game(final GameInput input) {
@@ -39,7 +39,7 @@ public final class Game {
     public void move() {
         StringBuilder line = new StringBuilder(rounds.get(0));
         rounds.remove(0);
-        for (Hero hero : heroes) {
+        for (AHero hero : heroes) {
             hero.getEffect().execute();
             Character c = line.charAt(0);
             line.delete(0, 1);
@@ -104,7 +104,7 @@ public final class Game {
                     }
                 }
             }
-            for (Hero hero : heroes) {
+            for (AHero hero : heroes) {
                 hero.checkLvlUp();
             }
         }
@@ -117,7 +117,7 @@ public final class Game {
         applied on each combatant.
         Then, the statistics of the battle are updated.
      */
-    private void fight(final Hero combatant1, final Hero combatant2) {
+    private void fight(final AHero combatant1, final AHero combatant2) {
         if (combatant1.getHp() <= 0 || combatant2.getHp() <= 0) {
             return;
         }
@@ -145,7 +145,7 @@ public final class Game {
         This method updates the statistics of the battle and
         computes the winner's experience.
      */
-    public void battleOutcome(final Hero h1, final Hero h2) {
+    public void battleOutcome(final AHero h1, final AHero h2) {
         BattlesStatistics.getInstance().setStatus(h1.getId(), false);
         if (h2.getHp() > 0) {
             int xp = max(0, Constants.EXP - (h2.getLvl() - h1.getLvl())
@@ -158,7 +158,7 @@ public final class Game {
 
     // This method prints the game's result
     public void results() {
-        for (Hero hero : heroes) {
+        for (AHero hero : heroes) {
             System.out.print(hero.getName() + " ");
             if (hero.getHp() <= 0) {
                 System.out.print("dead");
@@ -176,7 +176,7 @@ public final class Game {
         return map;
     }
 
-    public ArrayList<Hero> getHeroes() {
+    public ArrayList<AHero> getHeroes() {
         return heroes;
     }
 

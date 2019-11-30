@@ -3,7 +3,7 @@ package com.Abilities.Pyromancer;
 import com.Abilities.IAbility;
 import com.Constants;
 import com.Game.BattlesStatistics;
-import com.Heroes.Hero;
+import com.Heroes.AHero;
 import com.Heroes.Knight;
 import com.Heroes.Pyromancer;
 import com.Heroes.Rogue;
@@ -15,9 +15,9 @@ public class Fireblast implements IAbility {
     private float landA = 1f;
 
     /**
-     * @see IAbility#computeDamage(Hero, Hero)
+     * @see IAbility#computeDamage(AHero, AHero)
      */
-    public BattlesStatistics.AttackInfo computeDamage(final Hero caster, final Hero victim) {
+    public BattlesStatistics.AttackInfo computeDamage(final AHero caster, final AHero victim) {
         float dmg = 0f;
         landA = 1f;
         BattlesStatistics.AttackInfo info = new BattlesStatistics.AttackInfo();
@@ -39,33 +39,33 @@ public class Fireblast implements IAbility {
     }
 
     /**
-     * @see IAbility#computeDamage(Hero, Hero)
+     * @see IAbility#computeDamage(AHero, AHero)
      */
-    public BattlesStatistics.AttackInfo execute(final Hero caster, final Wizard victim) {
+    public BattlesStatistics.AttackInfo execute(final AHero caster, final Wizard victim) {
         raceA = Constants.FIREBLAST_WIZARD_A;
         return computeDamage(caster, victim);
     }
 
     /**
-     * @see IAbility#computeDamage(Hero, Hero)
+     * @see IAbility#computeDamage(AHero, AHero)
      */
-    public BattlesStatistics.AttackInfo execute(final Hero caster, final Rogue victim) {
+    public BattlesStatistics.AttackInfo execute(final AHero caster, final Rogue victim) {
         raceA = Constants.FIREBLAST_ROGUE_A;
         return computeDamage(caster, victim);
     }
 
     /**
-     * @see IAbility#computeDamage(Hero, Hero)
+     * @see IAbility#computeDamage(AHero, AHero)
      */
-    public BattlesStatistics.AttackInfo execute(final Hero caster, final Pyromancer victim) {
+    public BattlesStatistics.AttackInfo execute(final AHero caster, final Pyromancer victim) {
         raceA = Constants.FIREBLAST_PYROMANCER_A;
         return computeDamage(caster, victim);
     }
 
     /**
-     * @see IAbility#computeDamage(Hero, Hero)
+     * @see IAbility#computeDamage(AHero, AHero)
      */
-    public BattlesStatistics.AttackInfo execute(final Hero caster, final Knight victim) {
+    public BattlesStatistics.AttackInfo execute(final AHero caster, final Knight victim) {
         raceA = Constants.FIREBLAST_KNIGHT_A;
         return computeDamage(caster, victim);
     }

@@ -4,16 +4,16 @@ import com.Abilities.IAbility;
 import com.Game.BattlesStatistics;
 import com.Game.MyPair;
 
-public class Pyromancer extends Hero {
+public class Pyromancer extends AHero {
     public Pyromancer(final int id, final int hp, final int upHP,
                       final MyPair<Character, MyPair<Integer, Integer>> position) {
         super(id, "P", hp, upHP, position);
     }
 
     /**
-     * @see Hero#acceptAttack(Hero)
+     * @see AHero#acceptAttack(AHero)
      */
-    public BattlesStatistics.AttackInfo acceptAttack(final Hero caster) {
+    public BattlesStatistics.AttackInfo acceptAttack(final AHero caster) {
         BattlesStatistics.AttackInfo info = new BattlesStatistics.AttackInfo();
         for (IAbility ability : caster.getAbilities()) {
             BattlesStatistics.AttackInfo aux = ability.execute(caster, this);

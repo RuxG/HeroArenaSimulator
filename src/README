@@ -1,0 +1,117 @@
+321 CA Grigorie Ruxandra
+ruxi.grigorie@gmail.com
+
+# OOP project, part 1
+----------------------
+
+
+## Project flow and structure
+-----------------------------
+
+       * The program's flow is the following:
+
+              1) Input processing
+
+              2) Round execution which further divides in:
+                  * Executing heroes's moves on the map
+                  * Executing the fights between the heroes
+
+              3) Results computing
+
+
+      * I have structured the project in the following way:
+
+        ** Main <-> responsible for executing the stages of the game
+
+        ** Game <-> responsible for implementing the stages of the game
+
+        ** GameInput & GameInputLoader <-> responsible for processing the input
+
+        ** AHero <-> abstract class describing a hero, which is subclassed in: Wizard,
+        Pyromancer, Rogue and Wizard. New types of heroes can be created by extending
+        the base class.
+
+        ** IAbility <-> interface describing an ability, which is implemented by the 8
+        abilities of the game: Backstab, Execute, Deflect etc. New abilities can be further
+        created by implementing this interface.
+
+        ** AbilitiesFactory <-> singleton factory that creates the abilities used in the game. They
+        can be obtained by calling the 'getAbilities' method.
+
+        ** HeroesFactory <-> singleton factory that creates the heroes participating in the game.
+        They can be obtained by calling the 'getHeroes' method, which requires as parameter
+        the heroes's type and position on the map. It uses the 'getAbilities' method to give each
+        hero his specific abilities. Since the heroes and abilities have a lose coupling
+        interaction, heroes can attain new abilities without making changes in the class itself.
+
+        ** Map <-> singleton class retaining the game's map's characteristics: cells and land type
+
+        ** BattlesStatistics <-> responsible for retaining information about the statistics
+        of the battles (information about an individual hero's wins, loses etc, information
+        about an attack's damage (with and without modifiers))
+
+        ** OvertimeEffect <-> describes the functions of an ability's overtime effect
+
+        ** Constants <-> retains constants used throughout the game
+
+
+## Use of Double Dispatch
+--------------------------
+
+      I've used the double dispatch pattern in the following way:
+
+        * 'AHero' is an abstract class defining a hero. It is extended by 4 subclasses,
+        each describing a different type of hero: Wizard, Pyromancer, Rogue and Knight.
+        I have thought of a hero as an object on which an operation can be effectuated.
+
+        * 'IAbility' interface acts as an abstract visitor and it's implemented
+        by 8 concrete visitors: Backstab, Deflect etc (the abilities of the heroes). I have
+        though of an ability as an operation that can be effectuated on a hero.
+
+        * The interface sketches 4 'execute' methods, differentiating by the type of 'Hero'
+        instantiation on which it will operate.
+
+        * The interaction between the 2 hierarchies is effectuated through the visited objects's
+        acceptance method (acceptAttack) and the effective operation done on the object (execute).
+        These abstract methods are further implemented by the respective subclasses.
+
+        * The 4 'execute' methods in each concrete visitor effectuate 2 jobs:
+              - compute the specific race amplifier for the AHero subtype it operates on
+              - call the 'computeDamage' method which computes the effective damage of the attack
+
+        * I have drawn a scheme that summarises the use of this pattern:
+
+
+
+        ------------------------------                              ------------------------------
+        |           IAbility         |                              |             AHero          |
+        ------------------------------         acceptAttack         ------------------------------
+        | computeDamage(AHero, AHero)| <--------------------------- |        acceptAttack        |
+        | execute (AHero, Wizard)    | ---------------|             ------------------------------
+        | execute (AHero, Pyromancer)| -------------| |                        |
+        | execute (AHero, Rogue)     | -----------| | |                        |
+        | execute (AHero, Knight)    | ---------- | | |                        |
+        ------------------------------          | | | |                        |
+                       |                        | | | |                        | extends
+                       |                        | | | |                        |
+                       | implements             | | | |                        |
+                       |                        | | | |                        |
+                       |                        | | | |                        |
+     -------------------------------------      | | | |         ---------------------------------
+     |            |                      |      | | | |         |         |          |          |
+     |            |                      |      | | | |         |         |          |          |
+     |            |                      |      | | | |         |         |          |          |
+  Backstab       Ignite      ...      Deflect   | | | |      Wizard   Pyromancer   Rogue     Knight
+                                                | | | |        |          |          |          |
+                                                | | | |------->|          |          |          |
+                                                | | |-------------------->|          |          |
+                                                | |--------------------------------->|          |
+                                                |---------------------------------------------->|
+
+
+## Use of git
+-------------
+
+    * Since it is the first time using git, I am aware my commits are not so consistent, but in
+    regards of the educational purpose, I think I've learned a thing or two, and I am glad because
+    of that :)

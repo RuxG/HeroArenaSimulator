@@ -12,7 +12,7 @@ import java.util.ArrayList;
 /**
  * This class represents the abstract form of a hero, with it's specific characteristics.
  */
-public abstract class Hero {
+public abstract class AHero {
     private int id;
     private String name;
     private float hp;
@@ -25,8 +25,8 @@ public abstract class Hero {
     private OvertimeEffect effect;
     private MyPair<Character, MyPair<Integer, Integer>> position;
 
-    Hero(final int id, final String name, final int hp, final int upHP,
-         final MyPair<Character, MyPair<Integer, Integer>> position) {
+    AHero(final int id, final String name, final int hp, final int upHP,
+          final MyPair<Character, MyPair<Integer, Integer>> position) {
         setId(id);
         setName(name);
         setHp(hp);
@@ -62,7 +62,7 @@ public abstract class Hero {
      * @param caster is the hero initiating the attack
      * @return information about the battle outcome
      */
-    public abstract BattlesStatistics.AttackInfo acceptAttack(Hero caster);
+    public abstract BattlesStatistics.AttackInfo acceptAttack(AHero caster);
 
     public final int getLvl() {
         return lvl;

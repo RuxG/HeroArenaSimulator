@@ -2,7 +2,7 @@ package com.Game;
 
 import com.Abilities.IAbility;
 import com.Constants;
-import com.Heroes.Hero;
+import com.Heroes.AHero;
 import com.Heroes.Knight;
 import com.Heroes.Pyromancer;
 import com.Heroes.Rogue;
@@ -33,10 +33,10 @@ public class HeroesFactory {
      *                         that will be instantiated
      * @return a list of all the heroes who will participate in the game
      */
-    public ArrayList<Hero> getHeroes(final ArrayList<MyPair<Character,
+    public ArrayList<AHero> getHeroes(final ArrayList<MyPair<Character,
             MyPair<Integer, Integer>>> initialPositions) {
 
-        ArrayList<Hero> heroes = new ArrayList<>();
+        ArrayList<AHero> heroes = new ArrayList<>();
         Hashtable<String, IAbility> abilities = AbilitiesFactory.getInstance().getAbilities();
 
         for (int i = 0; i < initialPositions.size(); i++) {
