@@ -1,5 +1,5 @@
 # HeroArenaSimulator
- Project that simulates battles between heroes, with the purpose of learning OOP and design patterns. 
+ Project that simulates battles between heroes, with the purpose of learning **OOP** and **design patterns**. 
  
  
  ## Short overview
